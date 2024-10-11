@@ -7,6 +7,7 @@ const inter = Inter({
 })
 
 import { cn } from "@/lib/utils";
+import { QueryProvider } from "@/components/query-provider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,7 +24,9 @@ export default function RootLayout({
       <body
         className={cn(inter.className, "antialiased min-h-screen")}
       >
-        {children}
+        <QueryProvider>
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );
