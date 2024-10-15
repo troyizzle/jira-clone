@@ -14,12 +14,14 @@ import { useRef } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Image from "next/image";
 import { ImageIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface CreateWorkspaceFormProps {
   onCancel?: () => void;
 }
 
 export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
+  const router = useRouter();
   const { mutate, isPending } = useCreateWorkspace();
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -38,9 +40,9 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
     }
 
     mutate({ form: finalValues }, {
-      onSuccess: () => {
+      onSuccess: ({ data }) => {
         form.reset();
-        // TODO: Redirect to workspace
+        router.push(`/workspaces/${data.$id}`);
       }
     });
   }
@@ -142,7 +144,7 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
               />
             </div>
             <DottedSeparator className="py-7" />
-            <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 items-center justify-between">
+            <div className="flex items-center justify-between">
               <Button
                 type="button"
                 size="lg"
