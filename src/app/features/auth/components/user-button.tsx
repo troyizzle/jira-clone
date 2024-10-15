@@ -1,3 +1,5 @@
+"use client";
+
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useCurrent } from "../api/use-current"
 import { Loader, LogOut } from "lucide-react"

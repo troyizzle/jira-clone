@@ -14,11 +14,10 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import Link from "next/link";
 import { loginSchema } from "../schemas";
 import { useLogin } from "../api/use-login";
-import { signIn } from "next-auth/react"
 
 
 export const SignInCard = () => {
-  const { mutate } = useLogin();
+  const { mutate, isPending } = useLogin();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -29,11 +28,7 @@ export const SignInCard = () => {
   })
 
   const onSubmit = (values: z.infer<typeof loginSchema>) => {
-    signIn("credentials", {
-      email: values.email,
-      password: values.password,
-      redirect: false
-    })
+    mutate({ json: values });
   }
 
   return (
@@ -58,6 +53,7 @@ export const SignInCard = () => {
                     <Input
                       {...field}
                       type="email"
+                      disabled={isPending}
                       placeholder="Enter an email address.."
                     />
                   </FormControl>
@@ -75,6 +71,7 @@ export const SignInCard = () => {
                     <Input
                       {...field}
                       type="password"
+                      disabled={isPending}
                       placeholder="Enter password"
                     />
                   </FormControl>
@@ -83,7 +80,7 @@ export const SignInCard = () => {
               )}
             />
 
-            <Button disabled={false} size="lg" className="w-full">
+            <Button disabled={isPending} size="lg" className="w-full">
               Login
             </Button>
           </form>
