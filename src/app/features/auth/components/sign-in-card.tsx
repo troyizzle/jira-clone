@@ -14,6 +14,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import Link from "next/link";
 import { loginSchema } from "../schemas";
 import { useLogin } from "../api/use-login";
+import { signIn } from "next-auth/react"
 
 
 export const SignInCard = () => {
@@ -28,7 +29,11 @@ export const SignInCard = () => {
   })
 
   const onSubmit = (values: z.infer<typeof loginSchema>) => {
-    mutate(values)
+    signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      redirect: false
+    })
   }
 
   return (
