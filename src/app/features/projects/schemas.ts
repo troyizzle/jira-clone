@@ -8,3 +8,11 @@ export const createProjectSchema = z.object({
   ]).optional(),
   workspaceId: z.string().trim().min(1, "Required"),
 })
+
+export const updateProjectSchema = z.object({
+  name: z.string().trim().min(1, "Required").optional(),
+  image: z.union([
+    z.instanceof(File),
+    z.string().transform((value) => value === "" ? undefined : value)
+  ]).optional(),
+})
