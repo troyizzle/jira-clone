@@ -17,9 +17,10 @@ export function generateInviteCode(length: number) {
   return result;
 }
 
+// BACKLOG -> Backlog
 export function snakeCaseToTitleCase(str: string) {
   return str
     .split("_")
-    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
-    .join(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
 }
